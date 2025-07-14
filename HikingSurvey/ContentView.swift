@@ -1,8 +1,12 @@
 
 import SwiftUI
 
+let EMPTY_STRING = ""
+
 struct ContentView: View {
+    @FocusState private var textFieldFocused: Bool
     @State var responses: [Response] = []
+    @State private var responseText = ""
     var scorer = Scorer()
     
     func saveResponce(text: String) {
@@ -22,6 +26,19 @@ struct ContentView: View {
                     ResponseView(response: response)
                 }
             }
+            HStack {
+                TextField("What do you think about hiking?", text: $responseText)
+                    .textFieldStyle(.roundedBorder)
+                    .lineLimit(5)
+                Button("Done") {
+                    guard !responseText.isEmpty else { return }
+                    saveResponce(text: responseText)
+                    responseText = EMPTY_STRING
+                    textFieldFocused = false
+                }
+                .padding(.horizontal, 4)
+            }
+            .padding(.bottom, 8)
         }
         .onAppear {
             for response in Response.sampleResponses {
