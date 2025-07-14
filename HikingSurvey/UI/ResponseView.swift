@@ -11,9 +11,10 @@ struct ResponseView: View {
             .background(RoundedRectangle(cornerRadius: 8)
                 .fill(.white)
             )
+        Text(response.score, format: .number.rounded(increment: 0.1))
     }
 }
 
 #Preview {
-    ResponseView(response: Response(text: "I love this song"))
+    ResponseView(response: Response(text: "I love this song",score: 1.0))
 }
