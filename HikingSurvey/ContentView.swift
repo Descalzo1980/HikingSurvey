@@ -3,6 +3,13 @@ import SwiftUI
 
 struct ContentView: View {
     @State var responses: [Response] = []
+    var scorer = Scorer()
+    
+    func saveResponce(text: String) {
+        let score = scorer.score(text)
+        let response = Response(text: text, score: score)
+        responses.insert(response, at: 0)
+    }
     
     var body: some View {
         VStack {
@@ -18,7 +25,7 @@ struct ContentView: View {
         }
         .onAppear {
             for response in Response.sampleResponses {
-                responses.insert(Response(text: response),at: 0)
+                saveResponce(text: response)
             }
         }
         .padding(.horizontal)
